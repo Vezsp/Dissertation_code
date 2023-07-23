@@ -11,13 +11,15 @@ textfile.close()
 #print(strippedtext)
 
 # creating a regex pattern to find only abstract text
-rgxpat=re.compile(r"Abstract = {(.+?)}") #compiling a regex pattern
-list_of_abstracts=rgxpat.findall(strippedtext) # finding all the abstract text
-#print(list_of_paragraphs) #printing the abstract text (in list form)
+#compiling a regex pattern
+rgxpat=re.compile(r"Abstract = {(.+?)}")
+# finding all the abstract text
+list_of_abstracts=rgxpat.findall(strippedtext)
+#print(list_of_abstracts) #printing the abstract text (in list form)
 
 
 # breaking down the abstract into list of words
-Frequencytable={}
+Frequencylist={}
 for each_abstract in list_of_abstracts:
     listofwords=each_abstract.split()
     listofuppercasewords=[]
@@ -25,14 +27,20 @@ for each_abstract in list_of_abstracts:
         listofuppercasewords.append(lowerword.upper())
     setofwords=set(listofuppercasewords)
 
-    for word in setofwords:  # for every word in that abstract
-        if word in Frequencytable:
-            Frequencytable[word]+=1
+    # for every word in that abstract
+    for word in setofwords:
+        if word in Frequencylist:
+            Frequencylist[word]+=1
         else:
-            Frequencytable[word]=1
+            Frequencylist[word]=1
 
-print(Frequencytable)
+print(Frequencylist)
 
+tableheaders=['Word' , 'Number of Occurances']
 
+print(f"{tableheaders[0]: <15}{tableheaders[1]}")
+
+for key,value in Frequencylist.items():
+    print(f"|{key: <15}|{value: <5}|")
 
 
