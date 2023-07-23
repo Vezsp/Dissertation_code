@@ -8,7 +8,7 @@ sw_nltk = stopwords.words('english')
 import numpy as np
 
 # opening the batchfile test and saving it to variable. Removing newlines and extra spaces
-textfile=open("Test batch file.txt", "rt", encoding="utf8")
+textfile=open("Article batch file.txt", "rt", encoding="utf8")
 scannedtext=textfile.read()
 strippedtext=scannedtext.replace("   ", " ")
 strippedtext=strippedtext.replace("\n", "")
