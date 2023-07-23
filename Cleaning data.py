@@ -13,4 +13,14 @@ textfile.close()
 
 rgxpat=re.compile(r"Abstract = {(.+?)}") #creating a regex pattern to find only abstract text
 absonly=rgxpat.findall(strippedtext) #finding all the abstract text
-print(absonly) #printing the abstract text
+#print(absonly) #printing the abstract text (in list form)
+
+# breaking down the abstract into list of words
+brokendownabs=[]
+for value in absonly:
+    listofwords=value.split()
+    brokendownabs.append(listofwords)
+
+
+
+
