@@ -45,18 +45,28 @@ for each_abstract in list_of_abstracts:
             frequency_dict[word]=1
 #print(frequency_list)
 
+sorted_frequency_dict=sorted(frequency_dict.items(), key=lambda x:x[1], reverse=True)
+converted_freq_dict=dict(sorted_frequency_dict)
+#print(converted_freq_dict)
+
 
 #Creating table
 table_headers=['Word' , 'Number of Occurances']
 print(f"{table_headers[0]: <15}{table_headers[1]}")
-for key,value in frequency_dict.items():
-    print(f"|{key: <15}|{value: <5}|")
-print("Length of table: ", len(frequency_dict))
+counter=0
+for key,value in converted_freq_dict.items():
+    if value>=100:
+        print(f"|{key: <30}|{value: <5}|")
+        counter+=1
+    else:
+        continue
+print("Length of table: ", counter)
 
 #Creating bar graph
-words = list(frequency_dict.keys())
-No_Of_Occ = list(frequency_dict.values())
-plt.bar(words, No_Of_Occ)
+words = list(converted_freq_dict.keys())
+No_Of_Occ = list(converted_freq_dict.values())
+plt.plot(words, No_Of_Occ)
+plt.xticks(rotation=90, horizontalalignment="center")
 plt.title("Number of times word occurs:")
 plt.xlabel('Word')
 plt.ylabel('No. of times')
