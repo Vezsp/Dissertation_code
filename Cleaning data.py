@@ -53,6 +53,7 @@ sorted_frequency_dict=sorted(frequency_dict.items(), key=lambda x:x[1], reverse=
 converted_freq_dict=dict(sorted_frequency_dict)
 #print(converted_freq_dict)
 
+#creating dictionary that includes all words appearing over 100 times in all abstracts
 edited_freq_dict = dict(filter(lambda pair: pair[1]>= 100, converted_freq_dict.items()))
 
 #Creating table
