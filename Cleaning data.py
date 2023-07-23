@@ -16,22 +16,20 @@ list_of_abstracts=rgxpat.findall(strippedtext) # finding all the abstract text
 #print(list_of_paragraphs) #printing the abstract text (in list form)
 
 
-
-
-
-
-
-
 # breaking down the abstract into list of words
 Frequencytable={}
 for each_abstract in list_of_abstracts:
     listofwords=each_abstract.split()
-    for word in listofwords:  # for every word in that abstract
-        upperword=word.upper() # make it uppercase. This will help with the dictionary aspect later
-        if upperword in Frequencytable:
-            Frequencytable[upperword]+=1
+    listofuppercasewords=[]
+    for lowerword in listofwords:
+        listofuppercasewords.append(lowerword.upper())
+    setofwords=set(listofuppercasewords)
+
+    for word in setofwords:  # for every word in that abstract
+        if word in Frequencytable:
+            Frequencytable[word]+=1
         else:
-            Frequencytable[upperword]=1
+            Frequencytable[word]=1
 
 print(Frequencytable)
 
