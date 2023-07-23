@@ -9,6 +9,8 @@ strippedtext=scannedtext.replace("   ", " ") # removing the newlines to help wit
 
 textfile.close()
 
+
+
 #print(strippedtext)
 
 rgxpat=re.compile(r"Abstract = {(.+?)}") #creating a regex pattern to find only abstract text
@@ -17,9 +19,18 @@ absonly=rgxpat.findall(strippedtext) #finding all the abstract text
 
 # breaking down the abstract into list of words
 brokendownabs=[]
-for value in absonly:
-    listofwords=value.split()
+for abstractwhole in absonly:
+    listofwords=abstractwhole.split()
     brokendownabs.append(listofwords)
+#print(brokendownabs)
+
+#converting all words to uppercase
+brokendownabsupper=[]
+for abstractsplit in brokendownabs:
+    for word in abstractsplit:
+        upperword=word.upper()
+        brokendownabsupper.append(upperword)
+#print(brokendownabsupper)
 
 
 
