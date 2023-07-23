@@ -1,4 +1,8 @@
 import re # importing the regex module
+import matplotlib.pyplot as plt
+import nltk
+from nltk.corpus import stopwords
+sw_nltk = stopwords.words('english')
 
 textfile=open("trialpiece.txt", "rt") # opening the batchfile test and saving it to variable
 scannedtext=""
@@ -19,28 +23,43 @@ list_of_abstracts=rgxpat.findall(strippedtext)
 
 
 # breaking down the abstract into list of words
-Frequencylist={}
+frequency_list={}
 for each_abstract in list_of_abstracts:
     listofwords=each_abstract.split()
-    listofuppercasewords=[]
+    list_of_upper_case_words=[]
     for lowerword in listofwords:
-        listofuppercasewords.append(lowerword.upper())
-    setofwords=set(listofuppercasewords)
+        #if lowerword.lower() not in sw_nltk:
+        list_of_upper_case_words.append(lowerword.upper())
+        #else:
+           # continue
+    set_of_words=set(list_of_upper_case_words)
+
+#print(set_of_words)
 
     # for every word in that abstract
-    for word in setofwords:
-        if word in Frequencylist:
-            Frequencylist[word]+=1
+    for word in set_of_words:
+        if word in frequency_list:
+            frequency_list[word]+=1
         else:
-            Frequencylist[word]=1
+            frequency_list[word]=1
 
-print(Frequencylist)
+print(frequency_list)
 
-tableheaders=['Word' , 'Number of Occurances']
+table_headers=['Word' , 'Number of Occurances']
 
-print(f"{tableheaders[0]: <15}{tableheaders[1]}")
+#print(f"{table_headers[0]: <15}{table_headers[1]}")
 
-for key,value in Frequencylist.items():
-    print(f"|{key: <15}|{value: <5}|")
+
+#for key,value in frequency_list.items():
+    #print(f"|{key: <15}|{value: <5}|")
+
+words = list(frequency_list.keys())
+No_Of_Occ = list(frequency_list.values())
+
+#plt.bar(words, No_Of_Occ)
+#plt.title("Number of times word occurs:")
+#plt.xlabel('Word')
+#plt.ylabel('No. of times')
+#plt.show()
 
 
