@@ -1,36 +1,39 @@
-import re #importing the regex module
+import re # importing the regex module
 
 textfile=open("trialpiece.txt", "rt") # opening the batchfile test and saving it to variable
 scannedtext=""
 for ll in textfile:
-    scannedtext+=ll.rstrip() #stripping the text of new lines
+    scannedtext+=ll.rstrip() # stripping the text of new lines
 
 strippedtext=scannedtext.replace("   ", " ") # removing the newlines to help with regex pattern
 
 textfile.close()
-
-
-
 #print(strippedtext)
 
-rgxpat=re.compile(r"Abstract = {(.+?)}") #creating a regex pattern to find only abstract text
-absonly=rgxpat.findall(strippedtext) #finding all the abstract text
-#print(absonly) #printing the abstract text (in list form)
+# creating a regex pattern to find only abstract text
+rgxpat=re.compile(r"Abstract = {(.+?)}") #compiling a regex pattern
+list_of_abstracts=rgxpat.findall(strippedtext) # finding all the abstract text
+#print(list_of_paragraphs) #printing the abstract text (in list form)
+
+
+
+
+
+
+
 
 # breaking down the abstract into list of words
-brokendownabs=[]
-for abstractwhole in absonly:
-    listofwords=abstractwhole.split()
-    brokendownabs.append(listofwords)
-#print(brokendownabs)
+Frequencytable={}
+for each_abstract in list_of_abstracts:
+    listofwords=each_abstract.split()
+    for word in listofwords:  # for every word in that abstract
+        upperword=word.upper() # make it uppercase. This will help with the dictionary aspect later
+        if upperword in Frequencytable:
+            Frequencytable[upperword]+=1
+        else:
+            Frequencytable[upperword]=1
 
-#converting all words to uppercase
-brokendownabsupper=[]
-for abstractsplit in brokendownabs:
-    for word in abstractsplit:
-        upperword=word.upper()
-        brokendownabsupper.append(upperword)
-#print(brokendownabsupper)
+print(Frequencytable)
 
 
 
