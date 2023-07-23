@@ -4,62 +4,62 @@ import nltk
 from nltk.corpus import stopwords
 sw_nltk = stopwords.words('english')
 
-textfile=open("trialpiece.txt", "rt") # opening the batchfile test and saving it to variable
+# opening the batchfile test and saving it to variable. Removing newlines and extra spaces
+textfile=open("trialpiece.txt", "rt")
 scannedtext=""
 for ll in textfile:
-    scannedtext+=ll.rstrip() # stripping the text of new lines
-
-strippedtext=scannedtext.replace("   ", " ") # removing the newlines to help with regex pattern
-
+    scannedtext+=ll.rstrip()
+strippedtext=scannedtext.replace("   ", " ")
 textfile.close()
 #print(strippedtext)
 
 # creating a regex pattern to find only abstract text
-#compiling a regex pattern
 rgxpat=re.compile(r"Abstract = {(.+?)}")
-# finding all the abstract text
 list_of_abstracts=rgxpat.findall(strippedtext)
-#print(list_of_abstracts) #printing the abstract text (in list form)
+#print(list_of_abstracts)
 
 
 # breaking down the abstract into list of words
-frequency_list={}
+frequency_dict={}
+punc=""".,/"""
 for each_abstract in list_of_abstracts:
     listofwords=each_abstract.split()
     list_of_upper_case_words=[]
     for lowerword in listofwords:
-        #if lowerword.lower() not in sw_nltk:
-        list_of_upper_case_words.append(lowerword.upper())
-        #else:
-           # continue
-    set_of_words=set(list_of_upper_case_words)
-
-#print(set_of_words)
-
-    # for every word in that abstract
-    for word in set_of_words:
-        if word in frequency_list:
-            frequency_list[word]+=1
+        for char in lowerword:
+            if char in punc:
+                lowerword=lowerword.replace(char,"")
+            else:
+                continue
+        if lowerword.lower() not in sw_nltk:
+            list_of_upper_case_words.append(lowerword.upper())
         else:
-            frequency_list[word]=1
+            continue
+    set_of_words=set(list_of_upper_case_words)
+#print(set_of_words)
+    # for every word in that abstract, add it to the frequency dictionary
+    for word in set_of_words:
+        if word in frequency_dict:
+            frequency_dict[word]+=1
+        else:
+            frequency_dict[word]=1
+#print(frequency_list)
 
-print(frequency_list)
 
+#Creating table
 table_headers=['Word' , 'Number of Occurances']
+print(f"{table_headers[0]: <15}{table_headers[1]}")
+for key,value in frequency_dict.items():
+    print(f"|{key: <15}|{value: <5}|")
+print("Length of table: ", len(frequency_dict))
 
-#print(f"{table_headers[0]: <15}{table_headers[1]}")
-
-
-#for key,value in frequency_list.items():
-    #print(f"|{key: <15}|{value: <5}|")
-
-words = list(frequency_list.keys())
-No_Of_Occ = list(frequency_list.values())
-
-#plt.bar(words, No_Of_Occ)
-#plt.title("Number of times word occurs:")
-#plt.xlabel('Word')
-#plt.ylabel('No. of times')
+#Creating bar graph
+words = list(frequency_dict.keys())
+No_Of_Occ = list(frequency_dict.values())
+plt.bar(words, No_Of_Occ)
+plt.title("Number of times word occurs:")
+plt.xlabel('Word')
+plt.ylabel('No. of times')
 #plt.show()
 
 
