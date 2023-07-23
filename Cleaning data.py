@@ -5,18 +5,18 @@ from nltk.corpus import stopwords
 sw_nltk = stopwords.words('english')
 
 # opening the batchfile test and saving it to variable. Removing newlines and extra spaces
-textfile=open("trialpiece.txt", "rt")
-scannedtext=""
-for ll in textfile:
-    scannedtext+=ll.rstrip()
+textfile=open("Test batch file.txt", "rt", encoding="utf8")
+scannedtext=textfile.read()
 strippedtext=scannedtext.replace("   ", " ")
+strippedtext=strippedtext.replace("\n", "")
 textfile.close()
-#print(strippedtext)
+print("Textfile put into variable 'textfile'.")
+
 
 # creating a regex pattern to find only abstract text
 rgxpat=re.compile(r"Abstract = {(.+?)}")
 list_of_abstracts=rgxpat.findall(strippedtext)
-#print(list_of_abstracts)
+print("Number of abstracts: ", len(list_of_abstracts))
 
 
 # breaking down the abstract into list of words
@@ -60,6 +60,6 @@ plt.bar(words, No_Of_Occ)
 plt.title("Number of times word occurs:")
 plt.xlabel('Word')
 plt.ylabel('No. of times')
-#plt.show()
+plt.show()
 
 
