@@ -8,13 +8,16 @@ sw_nltk = stopwords.words('english')
 import numpy as np
 
 # opening the batchfile test and saving it to variable. Removing newlines and extra spaces
-textfile=open("Article batch file.txt", "rt", encoding="utf8")
+textfile=open("practice finding articles text.txt", "rt", encoding="utf8")
 scannedtext=textfile.read()
 strippedtext=scannedtext.replace("   ", " ")
 strippedtext=strippedtext.replace("\n", "")
 textfile.close()
-print("Textfile put into variable 'textfile'.")
+#print(strippedtext)
 
+rgxarticlepattern=re.compile(r"article\{(.*?),DA ")
+list_of_articles=rgxarticlepattern.findall(strippedtext)
+print(len(list_of_articles))
 
 # creating a regex pattern to find only the data I need text
 rgxabspat=re.compile(r"Abstract = {(.+?)}")
