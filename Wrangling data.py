@@ -8,16 +8,17 @@ sw_nltk = stopwords.words('english')
 import numpy as np
 
 # opening the batchfile test and saving it to variable. Removing newlines and extra spaces
-textfile=open("practice finding articles text.txt", "rt", encoding="utf8")
+textfile=open("Article batch file.txt", "rt", encoding="utf8")
 scannedtext=textfile.read()
 strippedtext=scannedtext.replace("   ", " ")
 strippedtext=strippedtext.replace("\n", "")
 textfile.close()
 #print(strippedtext)
 
+# seperating the articles
 rgxarticlepattern=re.compile(r"article\{(.*?),DA ")
 list_of_articles=rgxarticlepattern.findall(strippedtext)
-print(len(list_of_articles))
+print("Number of articles: ", len(list_of_articles))
 
 # creating a regex pattern to find only the data I need text
 rgxabspat=re.compile(r"Abstract = {(.+?)}")
@@ -31,11 +32,11 @@ list_of_dates=rgxmonthpat.findall(strippedtext)
 list_of_addresses=rgxaddresspat.findall(strippedtext)
 list_of_titles=rgxtitlepat.findall(strippedtext)
 
-#print("Number of abstracts: ", len(list_of_abstracts))
-#print("Number of years: ", len(list_of_years))
-#print("Number of dates: ", len(list_of_dates))
-#print("Number of Addresses: ", len(list_of_addresses))
-#print("Number of Titles: ", len(list_of_titles))
+print("Number of abstracts: ", len(list_of_abstracts))
+print("Number of years: ", len(list_of_years))
+print("Number of dates: ", len(list_of_dates))
+print("Number of Addresses: ", len(list_of_addresses))
+print("Number of Titles: ", len(list_of_titles))
 
 
 
@@ -75,12 +76,12 @@ edited_freq_dict = dict(filter(lambda pair: pair[1]>= 100, converted_freq_dict.i
 
 #Creating table
 table_headers=['Word' , 'Number of Occurances']
-print(f"{table_headers[0]: <15}{table_headers[1]}")
+#print(f"{table_headers[0]: <15}{table_headers[1]}")
 counter=0
 for key,value in edited_freq_dict.items():
-        print(f"|{key: <30}|{value: <5}|")
+       # print(f"|{key: <30}|{value: <5}|")
         counter+=1
-print("Length of table: ", counter)
+#print("Length of table: ", counter)
 
 #Creating bar graph
 words = list(edited_freq_dict.keys())
@@ -90,6 +91,6 @@ plt.xticks(rotation=75, horizontalalignment="center")
 plt.title("Number of times word occurs:")
 plt.xlabel('Words', labelpad=20)
 plt.ylabel('No. of times')
-plt.show()
+#plt.show()
 
 
