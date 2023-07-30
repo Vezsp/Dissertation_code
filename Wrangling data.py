@@ -16,10 +16,24 @@ textfile.close()
 print("Textfile put into variable 'textfile'.")
 
 
-# creating a regex pattern to find only abstract text
-rgxpat=re.compile(r"Abstract = {(.+?)}")
-list_of_abstracts=rgxpat.findall(strippedtext)
-print("Number of abstracts: ", len(list_of_abstracts))
+# creating a regex pattern to find only the data I need text
+rgxabspat=re.compile(r"Abstract = {(.+?)}")
+rgxyearpat=re.compile(r"Year = {(.+?)}")
+rgxmonthpat=re.compile(r"Month = {(.+?)}")
+rgxaddresspat=re.compile(r"Address = {(.+?)}")
+rgxtitlepat=re.compile(r"Title = {(.+?)}")
+list_of_abstracts=rgxabspat.findall(strippedtext)
+list_of_years=rgxyearpat.findall(strippedtext)
+list_of_dates=rgxmonthpat.findall(strippedtext)
+list_of_addresses=rgxaddresspat.findall(strippedtext)
+list_of_titles=rgxtitlepat.findall(strippedtext)
+
+#print("Number of abstracts: ", len(list_of_abstracts))
+#print("Number of years: ", len(list_of_years))
+#print("Number of dates: ", len(list_of_dates))
+#print("Number of Addresses: ", len(list_of_addresses))
+#print("Number of Titles: ", len(list_of_titles))
+
 
 
 # breaking down the abstract into list of words
