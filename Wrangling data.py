@@ -1,11 +1,12 @@
 import re # importing the regex module
 import matplotlib.pyplot as plt
+from sklearn.feature_extraction.text import CountVectorizer
+from scipy.cluster import hierarchy
 plt.rcParams.update({'font.size': 8})
 import numpy as np
 import nltk
 from nltk.corpus import stopwords
 sw_nltk = stopwords.words('english')
-import numpy as np
 
 # opening the batchfile test and saving it to variable. Removing newlines and extra spaces
 textfile=open("Article batch file.txt", "rt", encoding="utf8")
@@ -38,7 +39,11 @@ print("Number of dates: ", len(list_of_dates))
 print("Number of Addresses: ", len(list_of_addresses))
 print("Number of Titles: ", len(list_of_titles))
 
-
+abstracts_doc=open("abstractsonly.txt", "wt")
+for line in list_of_abstracts:
+        abstracts_doc.write(str(line))
+        abstracts_doc.write("\n")
+abstracts_doc.close()
 
 # breaking down the abstract into list of words
 frequency_dict={}
@@ -74,14 +79,17 @@ converted_freq_dict=dict(sorted_frequency_dict)
 #creating dictionary that includes all words appearing over 100 times in all abstracts
 edited_freq_dict = dict(filter(lambda pair: pair[1]>= 100, converted_freq_dict.items()))
 
-#Creating table
+#Creating table of top 10 words
 table_headers=['Word' , 'Number of Occurances']
-#print(f"{table_headers[0]: <15}{table_headers[1]}")
+print(f"{table_headers[0]: <15}{table_headers[1]}")
 counter=0
 for key,value in edited_freq_dict.items():
-       # print(f"|{key: <30}|{value: <5}|")
-        counter+=1
-#print("Length of table: ", counter)
+        if counter<=11:
+            print(f"|{key: <30}|{value: <5}|")
+            counter+=1
+        else:
+            break
+print("Length of table: ", counter)
 
 #Creating bar graph
 words = list(edited_freq_dict.keys())
@@ -91,6 +99,6 @@ plt.xticks(rotation=75, horizontalalignment="center")
 plt.title("Number of times word occurs:")
 plt.xlabel('Words', labelpad=20)
 plt.ylabel('No. of times')
-#plt.show()
+plt.show()
 
 
